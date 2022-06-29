@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <style>
+    .map {
+      width: 100%;
+      height: 800px;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+  <link rel="stylesheet" href="js/ol/ol.css" type="text/css">
+  <script src="js/ol/ol.js"></script>
+  <title>OpenLayers example</title>
+</head>
+
+<body>
+  <div id="map" class="map"></div>
+  <script type="text/javascript">
+    let map = new ol.Map({
+      target: "map",
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM(),
+        }),
+      ],
+      view: new ol.View({
+        center: ol.proj.fromLonLat([116.39392, 39.916927]),
+        zoom: 12,
+      }),
+    });
+
+    const baseUrl = "http://localhost:8090/geoserver/ZHJY/ows";
+    const service = "WFS";
+    const version = "1.0.0";
+    const request = "GetFeature";//WFS请求方法
+    const typeName = "ZHJY:haidian";
+    const outputFormat = "application/json";
+
+    const style = new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: "#cc3333",
+        width: 2,
+      }),
+      fill: new ol.style.Fill({
+        color: "#ccffff",
+      }),
+    });
+
+    const vectorLayer = new ol.layer.Vector({
+      source: new ol.source.Vector({
+        format: new ol.format.GeoJSON(),
+        url: `${baseUrl}?service=${service}&version=${version}&request=${request}&typeName=${typeName}&outputFormat=${outputFormat}`,
+      }),
+      style: style,
+    });
+    map.addLayer(vectorLayer);
+    /**
+     * 鼠标移入高亮显示----鼠标改变不了样式结合事件绑定
+    */
+    let hitStyle = new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: 'black',
+        width: 2
+      }),
+      fill: new ol.style.Fill({
+        color: 'yellow'
+      }),
+    });
+    //改变要素样式
+    var select_move = new ol.interaction.Select({
+      condition: ol.events.condition.pointerMove,//设置监听事件
+      //layers:[],//筛选图层
+      style: (feature) => {
+        return new ol.style.Style({
+          fill: new ol.style.Fill({
+            color: 'yellow'
+          }),
+          stroke: new ol.style.Stroke({
+            color: 'black',
+            width: 5
+          }),
+        })
+      }
+    });
+    map.addInteraction(select_move);
+    //改变鼠标样式
+    map.on("pointermove", (e) => {
+      const isHover = map.hasFeatureAtPixel(e.pixel);
+      map.getTargetElement().style.cursor = isHover ? "pointer" : "";
+    })
+    //选中回调（不推荐这么写，推荐单击select中事件绑定的同事改变样式）
+    select_move.on("select", (e) => {
+        let coordinate = e.mapBrowserEvent.coordinate; //获取选择的坐标
+        let properties = e.selected[0].getProperties(); //获取当前要素的所有属性
+        console.log("坐标：", coordinate);
+        console.log(" properties:", properties);
+      });
+  </script>
+</body>
+
+</html>

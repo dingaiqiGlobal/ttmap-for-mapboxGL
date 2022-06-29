@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <style>
+    .map {
+      width: 100%;
+      height: 800px;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+    <link rel="stylesheet" href="js/ol/ol.css" type="text/css">
+    <script src="js/ol/ol.js"></script>
+  <title>OpenLayers example</title>
+</head>
+
+<body>
+  <button onclick="addTMS()">添加TMS服务</button>
+  <div id="map" class="map"></div>
+  <script type="text/javascript">
+    let map = new ol.Map({
+      target: "map",
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM(),
+        }),
+      ],
+      view: new ol.View({
+        center: ol.proj.fromLonLat([116.39392, 39.916927]),
+        zoom: 12,
+      }),
+    });
+    addTMS = () => {
+      let xyzLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+          projection: "EPSG:900913",
+          url: "http://localhost:8090/geoserver/gwc/service/tms/1.0.0/ZHJY%3Ahaidian@EPSG%3A900913@png/{z}/{x}/{-y}.png",
+          //tileUrlFunction：//较复杂
+          wrapX: true,
+        }),
+      });
+      map.addLayer(xyzLayer);
+    }
+
+
+    //加载tms矢量切片
+    // var test = new ol.layer.VectorTile({
+    //   source: new ol.source.VectorTile({
+    //     format: new ol.format.MVT(),
+    //     tileSize: 256,
+    //     url: 'url/{z}/{x}/{-y}.pbf',
+    //   })
+    // });
+  </script>
+</body>
+
+</html>

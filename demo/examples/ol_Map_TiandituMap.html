@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        .map {
+            width: 100%;
+            height: 800px;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+    <link rel="stylesheet" href="js/ol/ol.css" type="text/css">
+    <script src="js/ol/ol.js"></script>>
+    <title>OpenLayers example</title>
+</head>
+
+<body>
+    <div id="map" class="map"></div>
+    <script type="text/javascript">
+    	//tms--https://t6.tianditu.gov.cn/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=自己申请一个天地图key
+        url = "https://t0.tianditu.gov.cn/img_w/wmts?tk=21c1e34286caecc25fd94be94bfbe119";
+        proj = "EPSG:900913";
+        level = 18;
+        layerName = "img";
+        format = "tiles";
+        tileSize = [256, 256];
+        matrixSet = "w"
+
+        let projection = ol.proj.get(proj);
+        let projectionExtent = projection.getExtent();
+        let size = ol.extent.getWidth(projectionExtent) / 256;
+        let resolutions = new Array(level);
+        let matrixIds = new Array(level);
+        for (let z = 0; z < level; z++) {
+            resolutions[z] = size / Math.pow(2, z);
+            matrixIds[z] = z;
+        }
+        let TDTMap = new ol.layer.Tile({
+            source: new ol.source.WMTS({
+                url: url,
+                layer: layerName,
+                matrixSet: matrixSet,
+                format: format,
+                projection: projection,
+                tileGrid: new ol.tilegrid.WMTS({
+                    origin: ol.extent.getTopLeft(projectionExtent),
+                    resolutions: resolutions,
+                    matrixIds: matrixIds,
+                    tileSize: tileSize,
+                }),
+                zIndex: 1,
+            }),
+        });
+        let map = new ol.Map({
+            layers: [TDTMap],
+            target: "map",
+            view: new ol.View({
+                center: ol.proj.fromLonLat([116.39392, 39.916927]),
+                projection: projection,
+                zoom: 3,
+                maxZoom: 17,
+                minZoom: 1
+            })
+        });
+    </script>
+</body>
+
+</html>
