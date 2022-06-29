@@ -13,8 +13,8 @@ var exampleConfig = {
                 name: "地图示例",
                 content: [{
                     name: "OMS地图",
-                    thumbnail: "xingkong.gif",
-                    fileName: "ol_Map_OMS"
+                    thumbnail: "",
+                    fileName: "GL_template"
                 }, {
                     name: "bing地图",
                     thumbnail: "",
