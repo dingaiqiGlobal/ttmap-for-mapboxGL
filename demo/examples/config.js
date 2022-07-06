@@ -12,9 +12,9 @@ var exampleConfig = {
             "地图示例": {
                 name: "地图示例",
                 content: [{
-                    name: "OMS地图",
+                    name: "HelloWorld",
                     thumbnail: "",
-                    fileName: "GL_template"
+                    fileName: "gl_HelloWorld"
                 }, {
                     name: "bing地图",
                     thumbnail: "",
