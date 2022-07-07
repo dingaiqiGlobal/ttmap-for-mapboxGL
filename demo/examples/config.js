@@ -16,6 +16,10 @@ var exampleConfig = {
                     thumbnail: "",
                     fileName: "gl_HelloWorld"
                 }, {
+                    name: "添加Geoserver矢量切片",
+                    thumbnail: "",
+                    fileName: "gl_Map_Geoserver"
+                }, {
                     name: "bing地图",
                     thumbnail: "",
                     fileName: "ol_Map_Bing"
