@@ -6,8 +6,8 @@ var identification = {
 };
 
 var exampleConfig = {
-    "2D": {
-        name: "2D",
+    "2.5D": {
+        name: "2.5D",
         content: {
             "地图示例": {
                 name: "地图示例",
@@ -19,6 +19,10 @@ var exampleConfig = {
                     name: "添加Geoserver矢量切片",
                     thumbnail: "",
                     fileName: "gl_Map_Geoserver"
+                }, {
+                    name: "添加Geojson",
+                    thumbnail: "",
+                    fileName: "gl_Map_Geojson"
                 }, {
                     name: "bing地图",
                     thumbnail: "",
@@ -53,6 +57,31 @@ var exampleConfig = {
                     name: "瓦片网格描述",
                     thumbnail: "",
                     fileName: "ol_Map_CanvasTiles"
+                },
+                ]
+            },
+            "样式示例": {
+                name: "样式示例",
+                content: [{
+                    name: "重庆市",
+                    thumbnail: "",
+                    fileName: "gl_Item_ChongQing"
+                }, {
+                    name: "东城区",
+                    thumbnail: "",
+                    fileName: "gl_Item_DongCheng"
+                }, {
+                    name: "广州白云机场",
+                    thumbnail: "",
+                    fileName: "gl_Item_BaiYunAriport"
+                }, {
+                    name: "香港机场室内",
+                    thumbnail: "",
+                    fileName: "gl_Item_HongKangAriport"
+                }, {
+                    name: "mikiki购物中心室内",
+                    thumbnail: "",
+                    fileName: "gl_Item_HongKangMikiki"
                 },
                 ]
             },

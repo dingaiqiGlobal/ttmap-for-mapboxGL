@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset='utf-8' />
+    <title>mapbox</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='js/mapbox/mapbox-gl.js'></script>
+    <link href='js/mapbox/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='map'></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic2tiZXlvbmQiLCJhIjoiY2s5MmU1Y2RiMDR4aTNtcDh0MmgwaHQzcyJ9._tMktptrxVL-QNN5s2plzg';
+        let map = new mapboxgl.Map({
+            container: 'map',
+            style: 'http://192.168.51.11:8004/style/hongkangmikiki/G/style.json',
+            center: [114.1967981, 22.3334029],
+            zoom: 19.4,
+            pitch: 65,
+            bearing: 10
+        });
+    </script>
+
+</body>
+
+</html>

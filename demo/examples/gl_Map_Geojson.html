@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset='utf-8' />
+    <title>mapbox</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='js/mapbox/mapbox-gl.js'></script>
+    <link href='js/mapbox/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='map'></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic2tiZXlvbmQiLCJhIjoiY2s5MmU1Y2RiMDR4aTNtcDh0MmgwaHQzcyJ9._tMktptrxVL-QNN5s2plzg';
+        let map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v8',
+            center: [116.39392, 39.916927],
+            zoom: 9,
+            pitch: 45,
+        });
+        map.on('load', () => {
+            map.addSource('geojson_haidian', {
+                type: 'geojson',
+                data: 'http://192.168.201.138:8090/geoserver/ZHJY/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ZHJY%3Ahaidian&maxFeatures=5000&outputFormat=application%2Fjson'
+            }),
+                map.addLayer({
+                    id: 'haidian',
+                    source: 'geojson_haidian',
+                    type: 'fill',
+                    layout: {},
+                    paint: {
+                        'fill-color': '#088',
+                        'fill-opacity': 0.8
+                    }
+                })
+        })
+    </script>
+
+</body>
+
+</html>
